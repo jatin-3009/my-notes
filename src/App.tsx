@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/home/Home";
+import Blog from "./pages/blog/Blog";
+import AllBlogs from "./pages/allBlogs/AllBlogs";
+import NoPage from "./pages/noPage/NoPage";
+import BlogInfo from "./pages/blogInfo/BlogInfo";
+import AdminLogin from "./pages/admin/adminLogin/AdminLogin";
+import Dashboard from "./pages/admin/dashboard/Dashboard";
+import store from "./store/store";
+import { Provider } from "react-redux";
 
-function App() {
+const App = () => {
+  store.createStore();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store.getStore()}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/allblogs" element={<AllBlogs />} />
+          <Route path="/bloginfo/:id" element={<BlogInfo />} />
+          <Route path="/adminlogin" element={<AdminLogin />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/*" element={<NoPage />} />
+        </Routes>
+      </Router>
+    </Provider>
   );
-}
+};
 
 export default App;
